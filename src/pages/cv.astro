@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Jason Enia - Curriculum Vitae" description="Curriculum Vitae of Jason Enia.">
+  <article class="max-w-4xl mx-auto py-12 md:py-24 px-4">
+    
+    <header class="mb-12 md:mb-16">
+      <h1 class="text-5xl md:text-7xl font-serif font-bold tracking-tight text-charcoal dark:text-softcream mb-3">
+        Curriculum Vitae
+      </h1>
+      <p class="text-xl md:text-2xl text-charcoal/80 dark:text-softcream/80 font-normal max-w-2xl leading-tight">
+        A comprehensive record of research, teaching, and institutional leadership.
+      </p>
+      <div class="w-16 h-px bg-rust-500/60 mt-8"></div>
+    </header>
+
+    <div class="space-y-16">
+      
+      <section class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16">
+        <div class="col-span-1 md:col-span-4">
+          <h2 class="text-sm font-bold uppercase tracking-widest text-charcoal/40 dark:text-softcream/40 mb-4 md:sticky md:top-32">File</h2>
+        </div>
+        <div class="col-span-1 md:col-span-8 space-y-16">
+          <article class="group relative">
+            <h3 class="text-3xl font-serif font-semibold text-charcoal dark:text-softcream mb-4">
+              Latest Academic Revision
+            </h3>
+            <div class="text-base text-charcoal/60 dark:text-softcream/60 font-light leading-normal prose dark:prose-invert mb-6">
+              <p>PDF Document &middot; January 2026</p>
+            </div>
+            
+            <div class="flex items-center justify-end border-t border-charcoal/5 dark:border-softcream/5 pt-4">
+              <a href="/cv/eniacv.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-xs font-bold uppercase tracking-widest text-charcoal/50 dark:text-softcream/50 hover:text-charcoal dark:hover:text-softcream transition-colors">
+                Download <span class="ml-2">→</span>
+              </a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+    </div>
+  </article>
+</BaseLayout>

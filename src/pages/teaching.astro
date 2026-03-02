@@ -1,0 +1,99 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const courses = await getCollection("courses");
+// Sort logically: Current -> Upcoming -> Foundational
+courses.sort((a, b) => {
+  const order: Record<string, number> = {
+    Current: 1,
+    Upcoming: 2,
+    Foundational: 3,
+  };
+  // Using 'as string' or casting just in case, but simply string index is fine in TS with Record
+  const orderA = order[a.data.semester as string] || 99;
+  const orderB = order[b.data.semester as string] || 99;
+
+  if (orderA !== orderB) {
+    return orderA - orderB;
+  }
+  return a.data.code.localeCompare(b.data.code);
+});
+---
+
+<BaseLayout
+  title="Jason Enia - Teaching Portfolio"
+  description="Courses and teaching philosophy by Jason Enia, Professor of Political Science."
+>
+  <article class="max-w-4xl mx-auto py-12 md:py-24 px-4">
+    <header class="mb-12 md:mb-16">
+      <h1
+        class="text-5xl md:text-7xl font-serif font-bold tracking-tight text-charcoal dark:text-softcream mb-3"
+      >
+        Teaching
+      </h1>
+      <p
+        class="text-xl md:text-2xl text-charcoal/80 dark:text-softcream/80 font-normal max-w-2xl leading-tight"
+      >
+        Equipping students to demystify complex political systems.
+      </p>
+      <div class="w-16 h-px bg-rust-500/60 mt-8"></div>
+    </header>
+
+    <div class="space-y-16">
+      <section class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16">
+        <div class="col-span-1 md:col-span-4">
+          <h2
+            class="text-sm font-bold uppercase tracking-widest text-charcoal/40 dark:text-softcream/40 mb-4 md:sticky md:top-32"
+          >
+            Featured Courses
+          </h2>
+        </div>
+        <div class="col-span-1 md:col-span-8 space-y-16">
+          {
+            courses.map((course) => (
+              <article class="group relative">
+                <span class="flex items-center gap-3 mb-2">
+                  <span class="text-xs font-medium tracking-widest uppercase text-rust-600 dark:text-rust-500">
+                    {course.data.code}
+                  </span>
+                  {course.data.isCurrent ? (
+                    <span class="px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest bg-rust-500/10 text-rust-600 dark:text-rust-500 rounded-full border border-rust-500/20">
+                      {course.data.semester}
+                    </span>
+                  ) : null}
+                </span>
+
+                <h3 class="text-3xl font-serif font-semibold text-charcoal dark:text-softcream group-hover:text-rust-700 dark:group-hover:text-rust-400 transition-colors mb-4">
+                  {course.data.title}
+                </h3>
+
+                <div class="text-lg text-charcoal/80 dark:text-softcream/80 font-light leading-normal mb-6 prose dark:prose-invert">
+                  <p>{course.data.description}</p>
+                  {course.body && <p class="mt-4">{course.body}</p>}
+                </div>
+
+                <div class="flex items-center justify-end border-t border-charcoal/5 dark:border-softcream/5 pt-4">
+                  {course.data.code === "POLS 4081" ? (
+                    <span class="inline-flex items-center text-xs font-bold uppercase tracking-widest text-charcoal/30 dark:text-softcream/30 bg-charcoal/5 dark:bg-softcream/5 px-3 py-1.5 rounded cursor-not-allowed">
+                      Syllabus Available Summer 2026
+                    </span>
+                  ) : (
+                    <a
+                      href={course.data.syllabusLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="inline-flex items-center text-xs font-bold uppercase tracking-widest text-charcoal/50 dark:text-softcream/50 hover:text-charcoal dark:hover:text-softcream transition-colors"
+                    >
+                      View Syllabus <span class="ml-2">→</span>
+                    </a>
+                  )}
+                </div>
+              </article>
+            ))
+          }
+        </div>
+      </section>
+    </div>
+  </article>
+</BaseLayout>

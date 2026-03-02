@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+/* Enable class-based dark mode for Tailwind v4 */
+@variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-alabaster: #FAF9F6;
+  --color-charcoal: #1A1A1A;
+  --color-ink: #121212;
+  --color-softcream: #EAEAEA;
+  --color-rust-600: #8B4513;
+  --color-rust-500: #A0522D;
+
+  --font-sans: "Inter", "system-ui", sans-serif;
+  --font-serif: "Playfair Display", "Georgia", serif;
+}
+
+@layer base {
+  body {
+    @apply transition-colors duration-300 ease-in-out antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-serif text-charcoal dark:text-softcream tracking-tight;
+  }
+
+  p {
+    @apply leading-normal;
+  }
+}

@@ -1,0 +1,167 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+---
+
+<BaseLayout
+  title="Jason Enia - Home"
+  description="Jason Enia: Exploring the incentives that drive political behavior."
+>
+  <article class="max-w-6xl mx-auto py-12 md:py-24 px-4">
+    <div
+      class="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-24 items-start w-full relative"
+    >
+      <!-- Typography & Scrolling Content Section -->
+      <div
+        class="col-span-1 md:col-span-7 lg:col-span-8 order-2 md:order-1 flex flex-col pt-12 md:pt-24 space-y-24 md:space-y-32"
+      >
+        <!-- Hero Headers -->
+        <header class="space-y-6">
+          <h1
+            class="text-4xl md:text-5xl lg:text-6xl font-serif font-bold tracking-tight leading-tight text-charcoal dark:text-softcream text-balance"
+          >
+            Decoding complexity, one question at a time.
+          </h1>
+
+          <h2
+            class="text-xl md:text-2xl text-charcoal/70 dark:text-softcream/70 font-light tracking-wide italic"
+          >
+            Exploring the incentives that drive political behavior.
+          </h2>
+          <div class="w-16 h-px bg-rust-500/60 mt-8 mb-4"></div>
+        </header>
+
+        <!-- Featured Work Section -->
+        <section class="space-y-12">
+          <h3
+            class="text-sm font-bold uppercase tracking-widest text-charcoal/40 dark:text-softcream/40 pb-4 border-b border-charcoal/10 dark:border-softcream/10"
+          >
+            Featured Work
+          </h3>
+
+          <div class="space-y-10">
+            <!-- Item 1: Current Book Project -->
+            <a
+              href="/research#book-project"
+              class="block group cursor-pointer no-underline"
+            >
+              <article>
+                <span class="flex items-center gap-3 mb-2">
+                  <span
+                    class="text-xs font-medium tracking-widest uppercase text-rust-600 dark:text-rust-500"
+                    >Current Book Project</span
+                  >
+                </span>
+                <h4
+                  class="text-3xl font-serif font-semibold text-charcoal dark:text-softcream group-hover:text-rust-700 dark:group-hover:text-rust-400 transition-colors mb-0.5"
+                >
+                  Relative to What?
+                </h4>
+                <p
+                  class="text-lg text-charcoal/80 dark:text-softcream/80 font-light italic mt-2"
+                >
+                  8 Questions That Make You Smarter Every Day
+                </p>
+              </article>
+            </a>
+
+            <!-- Item 2: Grant Initiative -->
+            <a href="/research" class="block group cursor-pointer no-underline">
+              <article>
+                <span class="flex items-center gap-3 mb-2">
+                  <span
+                    class="text-xs font-medium tracking-widest uppercase text-rust-600 dark:text-rust-500"
+                    >Grant Initiative &bull; National Academy of Sciences</span
+                  >
+                </span>
+                <h4
+                  class="text-3xl font-serif font-semibold text-charcoal dark:text-softcream group-hover:text-rust-700 dark:group-hover:text-rust-400 transition-colors mb-0.5"
+                >
+                  The Gulf Scholars Program
+                </h4>
+                <p
+                  class="text-lg text-charcoal/80 dark:text-softcream/80 font-light italic mt-2"
+                >
+                  Preparing the next generation of undergraduate leaders to
+                  tackle the most critical challenges facing the Gulf Region.
+                </p>
+              </article>
+            </a>
+
+            <!-- Item 3: Featured Publication -->
+            <a
+              href="/publications"
+              class="block group cursor-pointer no-underline"
+            >
+              <article>
+                <span class="flex items-center gap-3 mb-2">
+                  <span
+                    class="text-xs font-medium tracking-widest uppercase text-rust-600 dark:text-rust-500"
+                    >Featured Publication</span
+                  >
+                </span>
+                <h4
+                  class="text-3xl font-serif font-semibold text-charcoal dark:text-softcream group-hover:text-rust-700 dark:group-hover:text-rust-400 transition-colors mb-0.5"
+                >
+                  Greasing the Wheels of the Nuclear Nonproliferation Regime
+                </h4>
+                <p
+                  class="text-lg text-charcoal/80 dark:text-softcream/80 font-light italic mt-2"
+                >
+                  Using a transaction cost framework, this research demonstrates
+                  how the Nuclear Suppliers Group acts as the essential 'grease'
+                  for international cooperation, mitigating the complex
+                  coordination challenges of nuclear trade.
+                </p>
+              </article>
+            </a>
+          </div>
+        </section>
+      </div>
+
+      <!-- Image Section (Sticky Portrait) -->
+      <div
+        class="col-span-1 md:col-span-5 lg:col-span-4 order-1 md:order-2 md:sticky md:top-32 self-start pb-12 md:pb-0"
+      >
+        <div
+          class="relative w-full aspect-[4/5] overflow-hidden rounded-lg shadow-sm border border-charcoal/5 dark:border-softcream/5"
+        >
+          <div
+            class="absolute inset-0 bg-charcoal/5 dark:bg-softcream/5 mix-blend-multiply z-10 transition-opacity duration-500 hover:opacity-0 pointer-events-none"
+          >
+          </div>
+          <img
+            id="portrait-img"
+            src="/images/jason-enia.jpg"
+            alt="Jason Enia Headshot"
+            class="object-cover object-top w-full h-full ease-out"
+            style="filter: grayscale(1);"
+          />
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const portrait = document.getElementById("portrait-img");
+      if (!portrait) return;
+
+      const handleScroll = () => {
+        const scrollY = window.scrollY;
+        // The portrait fully transitions to color after scrolling 400px down
+        const maxScroll = 400;
+        const progress = Math.min(scrollY / maxScroll, 1);
+
+        // 1 is full grayscale, 0 is full color
+        const grayscaleValue = 1 - progress;
+        portrait.style.filter = `grayscale(${grayscaleValue})`;
+      };
+
+      // Initial call to set state
+      handleScroll();
+
+      window.addEventListener("scroll", handleScroll, { passive: true });
+    });
+  </script>
+</BaseLayout>
