@@ -1,48 +1,117 @@
 ---
-import ThemeToggle from '../ui/ThemeToggle.astro';
+import ThemeToggle from "../ui/ThemeToggle.astro";
 
 const navItems = [
-  { href: '/about', label: 'About' },
-  { href: '/research', label: 'Research' },
-  { href: '/publications', label: 'Publications' },
-  { href: '/talks', label: 'Media' },
-  { href: '/teaching', label: 'Teaching' },
-  { href: '/cv', label: 'CV' },
-  { href: '/contact', label: 'Contact' },
+  { href: "/about", label: "About" },
+  { href: "/research", label: "Research" },
+  { href: "/publications", label: "Publications" },
+  { href: "/talks", label: "Media" },
+  { href: "/teaching", label: "Teaching" },
+  { href: "/cv", label: "CV" },
+  { href: "/contact", label: "Contact" },
 ];
 const currentPath = Astro.url.pathname;
 ---
-<header class="sticky top-0 z-50 w-full bg-alabaster/95 dark:bg-ink/95 backdrop-blur-sm border-b border-charcoal/10 dark:border-softcream/10">
+
+<header
+  class="sticky top-0 z-50 w-full bg-alabaster/95 dark:bg-ink/95 backdrop-blur-sm border-b border-charcoal/10 dark:border-softcream/10"
+>
   <div class="max-w-4xl mx-auto px-6 h-20 flex items-center justify-between">
-    <a href="/" class="text-2xl font-serif font-bold tracking-tight text-charcoal dark:text-softcream hover:text-rust-600 dark:hover:text-rust-500 transition-colors">
+    <a
+      href="/"
+      class="text-2xl font-serif font-bold tracking-tight text-charcoal dark:text-softcream hover:text-rust-600 dark:hover:text-rust-500 transition-colors"
+    >
       Jason Enia
     </a>
-    
+
     <nav class="hidden md:flex items-center gap-6">
-      {navItems.map(item => {
-        const isActive = currentPath === item.href || (item.href !== '/' && currentPath.startsWith(item.href));
-        return (
-          <a
-            href={item.href}
-            class={`text-sm font-medium tracking-wider uppercase transition-colors ${
-              isActive 
-                ? 'text-rust-600 dark:text-rust-500' 
-                : 'text-charcoal/60 dark:text-softcream/60 hover:text-charcoal dark:hover:text-softcream'
-            }`}
-          >
-            {item.label}
-          </a>
-        );
-      })}
+      {
+        navItems.map((item) => {
+          const isActive =
+            currentPath === item.href ||
+            (item.href !== "/" && currentPath.startsWith(item.href));
+          return (
+            <a
+              href={item.href}
+              class={`text-sm font-medium tracking-wider uppercase transition-colors ${
+                isActive
+                  ? "text-rust-600 dark:text-rust-500"
+                  : "text-charcoal/60 dark:text-softcream/60 hover:text-charcoal dark:hover:text-softcream"
+              }`}
+            >
+              {item.label}
+            </a>
+          );
+        })
+      }
       <ThemeToggle />
     </nav>
-    
-    <!-- Mobile Menu Button (simplified) -->
+
+    <!-- Mobile Menu Button -->
     <div class="md:hidden flex items-center gap-4">
       <ThemeToggle />
-      <button class="text-charcoal dark:text-softcream">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+      <button
+        id="mobile-menu-button"
+        class="text-charcoal dark:text-softcream"
+        aria-label="Toggle Mobile Menu"
+      >
+        <svg
+          class="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          ><path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
       </button>
     </div>
   </div>
+
+  <!-- Mobile Menu Container -->
+  <div
+    id="mobile-menu"
+    class="hidden md:hidden border-t border-charcoal/5 dark:border-softcream/5 bg-alabaster/98 dark:bg-ink/98 backdrop-blur-md"
+  >
+    <nav class="flex flex-col p-6 gap-6">
+      {
+        navItems.map((item) => {
+          const isActive =
+            currentPath === item.href ||
+            (item.href !== "/" && currentPath.startsWith(item.href));
+          return (
+            <a
+              href={item.href}
+              class={`text-xl font-serif font-medium tracking-tight transition-colors ${
+                isActive
+                  ? "text-rust-600 dark:text-rust-500"
+                  : "text-charcoal/60 dark:text-softcream/60 hover:text-charcoal dark:hover:text-softcream"
+              }`}
+            >
+              {item.label}
+            </a>
+          );
+        })
+      }
+    </nav>
+  </div>
 </header>
+
+<script is:inline>
+  function initMobileMenu() {
+    const mobileMenuButton = document.getElementById("mobile-menu-button");
+    const mobileMenu = document.getElementById("mobile-menu");
+
+    if (mobileMenuButton && mobileMenu) {
+      mobileMenuButton.addEventListener("click", () => {
+        mobileMenu.classList.toggle("hidden");
+      });
+    }
+  }
+
+  // Handle both initial load and view transitions
+  initMobileMenu();
+  document.addEventListener("astro:after-swap", initMobileMenu);
+</script>
